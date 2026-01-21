@@ -1,0 +1,140 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Valentine 💖</title>
+
+<style>
+body {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f9e3e3;
+    font-family: Arial, sans-serif;
+    flex-direction: column;
+}
+
+.container {
+    text-align: center;
+    margin-top: auto;
+}
+
+h1 {
+    font-size: 2.5em;
+    color: #d32f2f;
+}
+
+.buttons {
+    margin-top: 20px;
+}
+
+button {
+    font-size: 1.5em;
+    padding: 10px 20px;
+    margin: 10px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+button:hover {
+    transform: scale(1.05);
+}
+
+.yes-button {
+    background-color: #4caf50;
+    color: white;
+}
+
+.no-button {
+    background-color: #f44336;
+    color: white;
+}
+
+.gif_container img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+    margin-top: 20px;
+}
+
+/* Credits Section */
+.footer {
+    width: 100%;
+    background: linear-gradient(135deg, #000000, #2b0015);
+    color: #ffc0cb;
+    text-align: center;
+    padding: 15px 10px;
+    font-size: 14px;
+    letter-spacing: 0.5px;
+}
+
+.footer a {
+    color: #ff5fa2;
+    text-decoration: none;
+    margin: 0 5px;
+    transition: color 0.3s ease;
+}
+
+.footer a:hover {
+    color: #ffffff;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container" id="main">
+    <h1>Will you be my Valentine?</h1>
+
+    <div class="buttons">
+        <button class="yes-button" onclick="yes()">Yes</button>
+        <button class="no-button" onclick="no()">No</button>
+    </div>
+
+    <div class="gif_container">
+        <img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExbW5lenZyZHI5OXM2eW95b3pmMG40cWVrMDhtNjVuM3A4dGNxa2g2dSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/VM1fcpu2bKs1e2Kdbj/giphy.gif">
+    </div>
+</div>
+
+<div class="footer">
+    Made by <strong>@corpsealone</strong><br>
+    <a href="https://instagram.com/corpsealone" target="_blank">Insta</a> |
+    <a href="https://t.me/iFuckBaddies" target="_blank">Telegram</a>
+</div>
+
+<script>
+const messages = [
+ "Are you sure?","Really sure??","Are you positive?",
+ "Pookie please...","Just think about it!",
+ "If you say no, I will be really sad...",
+ "I will be very sad...","I will be very very very sad...",
+ "Ok fine, I will stop asking...","Just kidding, say yes please ❤️"
+];
+let i = 0;
+
+function no(){
+ const n = document.querySelector(".no-button");
+ const y = document.querySelector(".yes-button");
+ n.innerText = messages[i];
+ i = (i + 1) % messages.length;
+ let size = parseFloat(getComputedStyle(y).fontSize);
+ y.style.fontSize = (size * 1.4) + "px";
+}
+
+function yes(){
+ document.getElementById("main").innerHTML = `
+ <h1 style="font-size:3em;color:#d32f2f;">Knew you would say yes! 💘</h1>
+ <div class="gif_container">
+   <img src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExMmo3c3l5ODh3ZGN6NHhhaDE2Mjg1ZjkwOXczdDFxbWM3dTBtaW9zaiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/9XY4f3FgFTT4QlaYqa/giphy.gif">
+ </div>`;
+}
+</script>
+
+</body>
+</html>
